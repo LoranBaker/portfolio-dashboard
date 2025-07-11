@@ -1,0 +1,81 @@
+<!-- portfolio-dashboard.component.html -->
+<div class="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden">
+  <!-- Animated background elements -->
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
+    <div class="absolute top-3/4 right-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl animate-pulse"
+          style="animation-delay: 2s;"></div>
+    <div class="absolute top-1/2 left-1/2 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl animate-pulse"
+          style="animation-delay: 4s;"></div>
+  </div>
+
+  <div class="relative z-10 p-4 md:p-8">
+    <div class="max-w-8xl mx-auto">
+      <!-- Hero Header -->
+      <div class="mb-12">
+        <app-portfolio-header 
+          [mounted]="mounted"
+          [energyPerformanceData]="energyPerformanceData">
+        </app-portfolio-header>
+      </div>
+
+      <!-- Road to Paris Chart - Full Width -->
+      <div class="mb-8">
+        <app-road-to-paris-chart 
+          [data]="roadToParisData" 
+          [mounted]="mounted">
+        </app-road-to-paris-chart>
+      </div>
+
+      <!-- GRI Performance + Strategy Visualization Row -->
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-8">
+        <!-- GRI Performance Dashboard -->
+        <app-gri-performance 
+          [data]="griPerformanceData" 
+          [mounted]="mounted">
+        </app-gri-performance>
+
+        <!-- Strategy Visualization (CRREM Pie Chart) -->
+        <app-strategy-visualization 
+          [pieData]="pieData" 
+          [mounted]="mounted">
+        </app-strategy-visualization>
+      </div>
+
+      <!-- Investment Analysis + Economics/KPIs Row -->
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-8">
+        <!-- Investment Analysis -->
+        <app-investment-analysis [mounted]="mounted"></app-investment-analysis>
+
+        <!-- ROI & Economics Dashboard -->
+        <app-roi-economics 
+          [mounted]="mounted" 
+          [data]="roiEconomicsData">
+        </app-roi-economics>
+      </div>
+
+      <!-- Emissions Breakdown + Carbon Tax Timeline Row -->
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+        <!-- Emissions Breakdown -->
+        <app-emissions-breakdown 
+          [data]="emissionsByCountry" 
+          [mounted]="mounted">
+        </app-emissions-breakdown>
+
+        <!-- Carbon Tax Timeline -->
+        <app-carbon-tax-timeline 
+          [data]="carbonTaxData" 
+          [mounted]="mounted">
+        </app-carbon-tax-timeline>
+      </div>
+
+      <!-- Future Vision Section -->
+      <app-future-vision 
+        [portfolioTargets]="visionMetrics"
+        [griPerformanceData]="griPerformanceData"
+        [mounted]="mounted"
+        [targetYear]="2040">
+      </app-future-vision>
+    </div>
+  </div>
+</div>
