@@ -34,39 +34,44 @@
           [data]="griPerformanceData" 
           [mounted]="mounted">
         </app-gri-performance>
+                <!-- Investment Analysis -->
+                <app-investment-analysis [mounted]="mounted"></app-investment-analysis>
 
-        <!-- Strategy Visualization (CRREM Pie Chart) -->
-        <app-strategy-visualization 
-          [pieData]="pieData" 
-          [mounted]="mounted">
-        </app-strategy-visualization>
+      
       </div>
 
       <!-- Investment Analysis + Economics/KPIs Row -->
       <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-8">
-        <!-- Investment Analysis -->
-        <app-investment-analysis [mounted]="mounted"></app-investment-analysis>
 
-        <!-- ROI & Economics Dashboard -->
-        <app-roi-economics 
-          [mounted]="mounted" 
-          [data]="roiEconomicsData">
-        </app-roi-economics>
-      </div>
-
-      <!-- Emissions Breakdown + Carbon Tax Timeline Row -->
-      <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
-        <!-- Emissions Breakdown -->
-        <app-emissions-breakdown 
-          [data]="emissionsByCountry" 
-          [mounted]="mounted">
-        </app-emissions-breakdown>
+                     <!-- Strategy Visualization (CRREM Pie Chart) -->
+        <app-strategy-visualization 
+          [pieData]="pieData" 
+          [mounted]="mounted"
+            [totalAssets]="totalAssetsCount">
+        </app-strategy-visualization>
 
         <!-- Carbon Tax Timeline -->
         <app-carbon-tax-timeline 
           [data]="carbonTaxData" 
           [mounted]="mounted">
         </app-carbon-tax-timeline>
+
+      </div>
+
+      <!-- Emissions Breakdown + Carbon Tax Timeline Row -->
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+          
+            <!-- Emissions Breakdown -->
+        <app-emissions-breakdown 
+          [data]="emissionsByCountry" 
+          [mounted]="mounted">
+        </app-emissions-breakdown>
+
+        <!-- ROI & Economics Dashboard -->
+        <app-roi-economics 
+          [mounted]="mounted" 
+          [data]="roiEconomicsData">
+        </app-roi-economics>
       </div>
 
       <!-- Future Vision Section -->

@@ -13,10 +13,9 @@ import { CommonModule } from '@angular/common';
           <span class="text-2xl mr-4">📊</span>
           <div>
             <h3 class="text-2xl font-bold text-white">GRI Annual Report</h3>
-            <p class="text-white/60 text-sm">Key performance indicators</p>
+            <p class="text-white/60 text-sm">Compared to last year total and in percentage terms</p>
           </div>
         </div>
-        
         <div class="space-y-4">
           <div *ngFor="let item of data" 
                class="group p-5 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 hover:bg-white/15 transition-all duration-300">

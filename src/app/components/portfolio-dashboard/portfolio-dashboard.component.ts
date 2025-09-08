@@ -1,5 +1,5 @@
 // portfolio-dashboard.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FutureVisionComponent } from "../future-vision/future-vision.component";
 import { RoiEconomicsComponent } from "../roi-economics/roi-economics.component";
 import { CarbonTaxTimelineComponent } from "../carbon-tax-timeline/carbon-tax-timeline.component";
@@ -18,11 +18,13 @@ import { PortfolioTarget, RoiEconomicsData } from '../../interfaces/porfolio.int
   imports: [FutureVisionComponent, RoiEconomicsComponent, CarbonTaxTimelineComponent, InvestmentAnalysisComponent, StrategyVisualizationComponent, EmissionsBreakdownComponent, GriPerformanceComponent, RoadToParisChartComponent, PortfolioHeaderComponent]
 })
 export class PortfolioDashboardComponent implements OnInit {
+  @ViewChild(PortfolioHeaderComponent) portfolioHeader!: PortfolioHeaderComponent;
+  
   mounted = false;
 
   // Portfolio-specific configuration
   portfolioEmissionsConfig: PortfolioConfig = {
-    countries: ['Germany', 'Spain', 'Netherlands', 'France', 'Portugal', 'Poland'],
+    countries: ['Baden-Württemberg', 'Niedersachsen', 'Hessen', 'Sachsen', 'Nordrhein-Westfalen', 'Hamburg'],
     sectors: [
       { name: 'Residential', color: '#E74C3C', enabled: true },
       { name: 'Commercial', color: '#3498DB', enabled: true },
@@ -53,10 +55,21 @@ export class PortfolioDashboardComponent implements OnInit {
     { name: 'Not on CRREM Target', value: 30, color: '#64748b' }   
   ];
 
+  // Portfolio metrics (same structure as in PortfolioHeaderComponent)
+  metrics = [
+    { title: "Assets", value: "50.000", gradient: "from-blue-500/20 to-cyan-500/20", icon: "🏢", delay: 100 },
+    { title: "Asset Type", value: "Mix", gradient: "from-purple-500/20 to-pink-500/20", icon: "📊", delay: 200 },
+    { title: "Vermietete Fläche", value: "350.000 m²", gradient: "from-emerald-500/20 to-teal-500/20", icon: "📐", delay: 300 },
+    { title: "Gewerbefläche", value: "300.000 m²", gradient: "from-amber-500/20 to-orange-500/20", icon: "🏪", delay: 400 },
+    { title: "Wohnfläche", value: "50.000 m²", gradient: "from-rose-500/20 to-pink-500/20", icon: "🏠", delay: 500 },
+    { title: "Leerstand", value: "2,3%", gradient: "from-red-500/20 to-rose-500/20", icon: "📉", delay: 600 },
+    { title: "Miete p.a.", value: "3.050.000 €", gradient: "from-indigo-500/20 to-purple-500/20", icon: "💰", delay: 700 }
+  ];
+
   // Enhanced emissions data with more comprehensive sector breakdowns
   emissionsByCountry = [
     { 
-      country: 'Germany', 
+      country: 'Baden-Württemberg', 
       value: 27, 
       trend: '+2.1%',
       sectors: [
@@ -71,7 +84,7 @@ export class PortfolioDashboardComponent implements OnInit {
       ]
     },
     { 
-      country: 'Spain', 
+      country: 'Niedersachsen', 
       value: 18, 
       trend: '-1.3%',
       sectors: [
@@ -86,7 +99,7 @@ export class PortfolioDashboardComponent implements OnInit {
       ]
     },
     { 
-      country: 'Netherlands', 
+      country: 'Hessen', 
       value: 15, 
       trend: '+0.8%',
       sectors: [
@@ -101,7 +114,7 @@ export class PortfolioDashboardComponent implements OnInit {
       ]
     },
     { 
-      country: 'France', 
+      country: 'Sachsen', 
       value: 12, 
       trend: '-2.5%',
       sectors: [
@@ -116,7 +129,7 @@ export class PortfolioDashboardComponent implements OnInit {
       ]
     },
     { 
-      country: 'Portugal', 
+      country: 'Nordrhein-Westfalen', 
       value: 8, 
       trend: '+1.2%',
       sectors: [
@@ -131,7 +144,7 @@ export class PortfolioDashboardComponent implements OnInit {
       ]
     },
     { 
-      country: 'Poland', 
+      country: 'Hamburg', 
       value: 6, 
       trend: '-0.9%',
       sectors: [
@@ -147,7 +160,7 @@ export class PortfolioDashboardComponent implements OnInit {
     },
     // Additional countries available for configuration
     { 
-      country: 'Italy', 
+      country: 'Berlin', 
       value: 10, 
       trend: '+1.5%',
       sectors: [
@@ -162,7 +175,7 @@ export class PortfolioDashboardComponent implements OnInit {
       ]
     },
     { 
-      country: 'Austria', 
+      country: 'Frankfurt', 
       value: 5, 
       trend: '-0.3%',
       sectors: [
@@ -177,7 +190,7 @@ export class PortfolioDashboardComponent implements OnInit {
       ]
     },
     { 
-      country: 'Belgium', 
+      country: 'Bremen', 
       value: 7, 
       trend: '+0.8%',
       sectors: [
@@ -192,7 +205,7 @@ export class PortfolioDashboardComponent implements OnInit {
       ]
     },
     { 
-      country: 'Switzerland', 
+      country: 'München', 
       value: 4, 
       trend: '-1.2%',
       sectors: [
@@ -206,42 +219,13 @@ export class PortfolioDashboardComponent implements OnInit {
         { name: 'Retail', percentage: 0, color: '#1ABC9C' }
       ]
     },
-    { 
-      country: 'UK', 
-      value: 14, 
-      trend: '+1.7%',
-      sectors: [
-        { name: 'Residential', percentage: 28, color: '#E74C3C' },
-        { name: 'Commercial', percentage: 32, color: '#3498DB' },
-        { name: 'Office', percentage: 25, color: '#2ECC71' },
-        { name: 'Mixed', percentage: 10, color: '#9B59B6' },
-        { name: 'Other', percentage: 3, color: '#F39C12' },
-        { name: 'Individual', percentage: 2, color: '#F1C40F' },
-        { name: 'Industrial', percentage: 0, color: '#E67E22' },
-        { name: 'Retail', percentage: 0, color: '#1ABC9C' }
-      ]
-    },
-    { 
-      country: 'Ireland', 
-      value: 3, 
-      trend: '+0.5%',
-      sectors: [
-        { name: 'Residential', percentage: 40, color: '#E74C3C' },
-        { name: 'Commercial', percentage: 24, color: '#3498DB' },
-        { name: 'Office', percentage: 18, color: '#2ECC71' },
-        { name: 'Mixed', percentage: 12, color: '#9B59B6' },
-        { name: 'Other', percentage: 4, color: '#F39C12' },
-        { name: 'Individual', percentage: 2, color: '#F1C40F' },
-        { name: 'Industrial', percentage: 0, color: '#E67E22' },
-        { name: 'Retail', percentage: 0, color: '#1ABC9C' }
-      ]
-    }
   ];
 
   griPerformanceData = [
     { label: "Energie", value: "3000tsd kWh", change: "-9.0%", positive: true, icon: "⚡" },
     { label: "CO₂ Emissions", value: "200 Tons", change: "-9.0%", positive: true, icon: "🌿" },
     { label: "CO2 - Steuer", value: "€1.3Mio", change: "-25%", positive: false, icon: "💸" },
+    { label: "Energiekosten", value: "30.000 €", change: "-17%", positive: false, icon: "💶" },
     { label: "Leerstand", value: "2.0%", change: "-5.0%", positive: true, icon: "🏢" },
     { label: "Mietrendite", value: "4.5%", change: "+0.2%", positive: true, icon: "📈" }
   ];
@@ -266,6 +250,17 @@ export class PortfolioDashboardComponent implements OnInit {
       electricityRevenue: "200 tsd €",
       co2TaxSavings: co2TaxSavings
     };
+  }
+
+  // Extract total assets count from metrics
+  get totalAssetsCount(): number {
+    const assetsMetric = this.metrics.find(metric => metric.title === "Assets");
+    if (assetsMetric) {
+      // Convert "50.000" to 50000
+      const cleanValue = assetsMetric.value.replace(/\./g, '').replace(/[^\d]/g, '');
+      return parseInt(cleanValue) || 50000;
+    }
+    return 50000; // fallback
   }
 
   // Energy Performance Grid Data - Simple structure for app-metric-card
@@ -395,56 +390,54 @@ export class PortfolioDashboardComponent implements OnInit {
     // this.portfolioService.updateEmissionsConfig(config);
   }
 
- // Add this helper method to extract numeric values from CO2 tax strings
-private extractCo2TaxValue(taxString: string): number {
-  
-  // Handle different formats: "1,5 Mio. €", "€1.3Mio", "1.5 M. €"
-  const cleanString = taxString.toLowerCase();
-  
-  // Look for number followed by million indicator
-  const patterns = [
-    /(\d+[,.]?\d*)\s*(mio|million|m\.)/,  // "1,5 Mio" or "1.3Mio" or "1.5 M."
-    /€(\d+[,.]?\d*)(mio|million|m\.)/,    // "€1.3Mio"
-  ];
-  
-  for (const pattern of patterns) {
-    const match = cleanString.match(pattern);
-    if (match) {
-      // Replace comma with dot for proper parsing
-      const numberStr = match[1].replace(',', '.');
-      const value = parseFloat(numberStr);
-            
-      if (match[2]) { // Has million indicator
-        return value * 1000000;
+  // Add this helper method to extract numeric values from CO2 tax strings
+  private extractCo2TaxValue(taxString: string): number {
+    
+    // Handle different formats: "1,5 Mio. €", "€1.3Mio", "1.5 M. €"
+    const cleanString = taxString.toLowerCase();
+    
+    // Look for number followed by million indicator
+    const patterns = [
+      /(\d+[,.]?\d*)\s*(mio|million|m\.)/,  // "1,5 Mio" or "1.3Mio" or "1.5 M."
+      /€(\d+[,.]?\d*)(mio|million|m\.)/,    // "€1.3Mio"
+    ];
+    
+    for (const pattern of patterns) {
+      const match = cleanString.match(pattern);
+      if (match) {
+        // Replace comma with dot for proper parsing
+        const numberStr = match[1].replace(',', '.');
+        const value = parseFloat(numberStr);
+              
+        if (match[2]) { // Has million indicator
+          return value * 1000000;
+        }
       }
     }
+    
+    console.log('No match found, returning 0');
+    return 0;
   }
-  
-  console.log('No match found, returning 0');
-  return 0;
-}
 
-// Add this method to calculate CO2 tax savings
-private calculateCo2TaxSavings(): string {
-  // Get CO2 tax from portfolio header (co2Steuer = "1,5 Mio. €")
-  const headerCo2Tax = this.extractCo2TaxValue(this.co2Steuer);
-  
-  // Get CO2 tax from GRI performance (find CO2-Steuer item)
-  const griCo2Item = this.griPerformanceData.find(item => item.label === "CO2 - Steuer");
-  const griCo2Tax = griCo2Item ? this.extractCo2TaxValue(griCo2Item.value) : 0;
-  
-  // Calculate savings: header - gri
-  const savings = headerCo2Tax - griCo2Tax;
-  
-  // Format result
-  if (savings >= 1000000) {
-    return `${(savings / 1000000).toFixed(1)} M. €`;
-  } else if (savings >= 1000) {
-    return `${(savings / 1000).toFixed(0)} tsd €`;
-  } else {
-    return `${savings.toFixed(0)} €`;
+  // Add this method to calculate CO2 tax savings
+  private calculateCo2TaxSavings(): string {
+    // Get CO2 tax from portfolio header (co2Steuer = "1,5 Mio. €")
+    const headerCo2Tax = this.extractCo2TaxValue(this.co2Steuer);
+    
+    // Get CO2 tax from GRI performance (find CO2-Steuer item)
+    const griCo2Item = this.griPerformanceData.find(item => item.label === "CO2 - Steuer");
+    const griCo2Tax = griCo2Item ? this.extractCo2TaxValue(griCo2Item.value) : 0;
+    
+    // Calculate savings: header - gri
+    const savings = headerCo2Tax - griCo2Tax;
+    
+    // Format result
+    if (savings >= 1000000) {
+      return `${(savings / 1000000).toFixed(1)} M. €`;
+    } else if (savings >= 1000) {
+      return `${(savings / 1000).toFixed(0)} tsd €`;
+    } else {
+      return `${savings.toFixed(0)} €`;
+    }
   }
-}
-
-
 }

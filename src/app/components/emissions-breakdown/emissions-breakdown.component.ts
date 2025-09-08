@@ -31,8 +31,8 @@ export const DEFAULT_SECTORS: SectorConfig[] = [
 ];
 
 export const DEFAULT_COUNTRIES = [
-  'Germany', 'Spain', 'Netherlands', 'France', 'Portugal', 'Poland',
-  'Italy', 'Austria', 'Belgium', 'Switzerland', 'UK', 'Ireland'
+    'Baden-Württemberg', 'Niedersachsen', 'Hessen', 'Sachsen', 'Nordrhein-Westfalen', 'Hamburg','Berlin', 'Frankfurt', 'Bremen', 'München',
+
 ];
 
 @Component({
@@ -220,7 +220,7 @@ export class EmissionsBreakdownComponent implements OnInit {
 
   showConfigPanel = false;
   portfolioConfig: PortfolioConfig = {
-    countries: ['Germany', 'Spain', 'Netherlands', 'France', 'Portugal', 'Poland'],
+    countries: ['Baden-Württemberg', 'Niedersachsen', 'Hessen', 'Sachsen', 'Nordrhein-Westfalen', 'Hamburg'],
     sectors: DEFAULT_SECTORS.filter(s => s.enabled)
   };
 
@@ -270,7 +270,7 @@ export class EmissionsBreakdownComponent implements OnInit {
   }
 
   resetToDefaults(): void {
-    this.portfolioConfig.countries = ['Germany', 'Spain', 'Netherlands', 'France', 'Portugal', 'Poland'];
+    this.portfolioConfig.countries =['Baden-Württemberg', 'Niedersachsen', 'Hessen', 'Sachsen', 'Nordrhein-Westfalen', 'Hamburg'],
     this.availableSectors = DEFAULT_SECTORS.map(s => ({ ...s }));
   }
 

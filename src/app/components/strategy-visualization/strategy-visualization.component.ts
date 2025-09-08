@@ -9,6 +9,11 @@ interface ChartOption {
   data: PieData[];
 }
 
+// Extended interface for pie data with unit counts
+interface PieDataWithUnits extends PieData {
+  units?: number;
+}
+
 @Component({
   selector: 'app-strategy-visualization',
   template: `
@@ -95,22 +100,31 @@ interface ChartOption {
               <div class="flex items-center space-x-2">
                 <div class="w-3 h-3 rounded-full" [style.background-color]="hoveredSegment.color"></div>
                 <span>{{ hoveredSegment.name }}: {{ hoveredSegment.value }}%</span>
+                <span *ngIf="hoveredSegment.units" class="text-white/70">• {{ formatUnits(hoveredSegment.units) }}</span>
               </div>
             </div>
           </div>
         </div>
         
-        <!-- Legend -->
+        <!-- Enhanced Legend with Unit Counts -->
         <div class="space-y-3">
           <div 
             *ngFor="let item of currentData" 
-            class="flex items-center justify-between bg-white/5 backdrop-blur-sm rounded-xl p-3 border border-white/10 hover:bg-white/10 transition-all duration-200 cursor-pointer"
+            class="flex items-center justify-between bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 hover:bg-white/10 transition-all duration-200 cursor-pointer group"
             (mouseenter)="onSegmentHover(item)"
             (mouseleave)="onSegmentLeave()">
-            <div class="flex items-center space-x-3">
+            <div class="flex items-center space-x-4 flex-1">
               <div class="w-4 h-4 rounded-full" [style.background-color]="item.color"></div>
               <span class="text-white/90 font-medium text-sm">{{item.name}}</span>
             </div>
+            
+            <!-- Units display -->
+            <div *ngIf="item.units" class="flex items-center space-x-3 mr-4">
+              <div class="bg-white/10 backdrop-blur-sm rounded-lg px-3 py-1 border border-white/20 group-hover:bg-white/20 transition-all duration-200">
+                <span class="text-white/70 text-xs font-medium">{{ formatUnits(item.units) }}</span>
+              </div>
+            </div>
+            
             <div class="text-lg font-bold text-white">{{item.value}}%</div>
           </div>
         </div>
@@ -123,11 +137,12 @@ interface ChartOption {
 export class StrategyVisualizationComponent implements OnInit {
   @Input() pieData: PieData[] = [];
   @Input() mounted = false;
+  @Input() totalAssets = 50000; // Will be passed from parent component's real data
 
   isDropdownOpen = false;
   selectedOption!: ChartOption;
-  currentData: PieData[] = [];
-  hoveredSegment: PieData | null = null;
+  currentData: PieDataWithUnits[] = [];
+  hoveredSegment: PieDataWithUnits | null = null;
 
   chartOptions: ChartOption[] = [
     {
@@ -170,7 +185,7 @@ export class StrategyVisualizationComponent implements OnInit {
   ngOnInit() {
     // Set default option
     this.selectedOption = this.chartOptions[0];
-    this.currentData = this.selectedOption.data;
+    this.updateCurrentDataWithUnits();
   }
 
   toggleDropdown() {
@@ -179,8 +194,26 @@ export class StrategyVisualizationComponent implements OnInit {
 
   selectOption(option: ChartOption) {
     this.selectedOption = option;
-    this.currentData = option.data;
+    this.updateCurrentDataWithUnits();
     this.isDropdownOpen = false;
+  }
+
+  // Update current data with calculated unit counts
+  private updateCurrentDataWithUnits() {
+    this.currentData = this.selectedOption.data.map(item => ({
+      ...item,
+      units: this.calculateUnits(item.value)
+    }));
+  }
+
+  // Calculate unit count based on percentage
+  private calculateUnits(percentage: number): number {
+    return Math.round((percentage / 100) * this.totalAssets);
+  }
+
+  // Format units for display (e.g., 22000 -> "22,000 Units")
+  formatUnits(units: number): string {
+    return `${units.toLocaleString('de-DE')} Units`;
   }
 
   // Helper method to get stroke dash offset for a specific index
@@ -190,7 +223,7 @@ export class StrategyVisualizationComponent implements OnInit {
   }
 
   // Hover handlers for tooltips
-  onSegmentHover(segment: PieData): void {
+  onSegmentHover(segment: PieDataWithUnits): void {
     this.hoveredSegment = segment;
   }
 

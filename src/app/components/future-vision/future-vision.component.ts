@@ -34,12 +34,6 @@ import { PortfolioTarget, GriPerformanceItem } from '../../interfaces/porfolio.i
                 </select>
               </div>
             </div>
-            <div class="bg-gradient-to-r from-purple-600/80 to-indigo-600/80 backdrop-blur-sm rounded-2xl px-6 py-3 border border-purple-400/40 shadow-lg">
-              <div class="text-center">
-                <div class="text-purple-200 text-xs font-medium uppercase tracking-wide">Selected Year</div>
-                <span class="text-white text-xl font-bold">{{ selectedTargetYear }}</span>
-              </div>
-            </div>
           </div>
         </div>
         

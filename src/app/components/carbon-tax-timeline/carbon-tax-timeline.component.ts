@@ -16,7 +16,9 @@ import { CommonModule } from '@angular/common';
             <p class="text-white/60 text-sm">Projected tax burden timeline</p>
           </div>
         </div>
-        
+        <br>
+        <br>
+        <br>
         <div class="space-y-4">
           <div *ngFor="let item of data"
                 [class]="'p-4 bg-gradient-to-r ' + item.color + ' rounded-2xl border border-white/20'">
